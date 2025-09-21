@@ -5,31 +5,30 @@
 <title>Happy Birthday Babi</title>
 <style>
   body {
-    background: white;
+    background: linear-gradient(white, #87CEFA); /* gradient white to blue */
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     height: 100vh;
     margin: 0;
-    font-family: "Comic Sans MS", cursive, sans-serif;
     overflow: hidden;
+    font-family: "Brush Script MT", cursive; /* calligraphy style */
   }
 
   h1 {
-    color: #333;
-    font-size: 2em;
-    margin-bottom: 20px;
+    position: absolute;
+    bottom: 20px;
+    font-size: 2.5em;
+    color: #001f3f;
+    text-align: center;
   }
 
   .cake {
     position: relative;
-    width: 200px;
-    height: 120px;
-    background: #1e90ff; /* blue cake */
-    border-radius: 10px;
-    transform: translateY(-300px);     /* start high */
-    animation: dropIn 1s ease-out forwards; /* animate down */
+    margin-bottom: 50px;
+    animation: dropIn 1s ease-out forwards;
+    transform: translateY(-300px);
   }
 
   @keyframes dropIn {
@@ -37,33 +36,43 @@
     to { transform: translateY(0); }
   }
 
+  .layer {
+    width: 220px;
+    height: 50px;
+    background: #001f3f; /* dark blue */
+    border-radius: 0 0 15px 15px;
+    margin: 5px auto;
+    position: relative;
+  }
+
   .icing {
-    position: absolute;
-    top: 0;
     width: 100%;
-    height: 30px;
-    background: #fff; /* vanilla icing */
-    border-radius: 10px 10px 0 0;
+    height: 15px;
+    background: #fff;
+    border-radius: 15px 15px 0 0;
+    position: absolute;
+    top: -15px;
+    left: 0;
   }
 
   .candle {
     position: absolute;
-    top: -40px;
+    top: -70px;
     left: 50%;
-    width: 15px;
-    height: 40px;
-    margin-left: -7.5px;
-    background: #ff69b4;
-    border-radius: 3px;
+    width: 20px;
+    height: 60px;
+    margin-left: -10px;
+    background: pink;
+    border-radius: 5px;
   }
 
   .flame {
     position: absolute;
-    top: -20px;
+    top: -25px;
     left: 50%;
-    width: 15px;
-    height: 20px;
-    margin-left: -7.5px;
+    width: 20px;
+    height: 25px;
+    margin-left: -10px;
     background: orange;
     border-radius: 50%;
     animation: flicker 0.3s infinite alternate;
@@ -76,11 +85,11 @@
 
   .smoke {
     position: absolute;
-    top: -30px;
+    top: -35px;
     left: 50%;
-    width: 10px;
-    height: 10px;
-    margin-left: -5px;
+    width: 12px;
+    height: 12px;
+    margin-left: -6px;
     border-radius: 50%;
     background: gray;
     opacity: 0;
@@ -96,21 +105,24 @@
 </head>
 <body>
 
-<h1>Happy Birthday, My Dearest Babi&lt;3</h1>
-
 <div class="cake">
-  <div class="icing"></div>
   <div class="candle">
     <div class="flame" id="flame"></div>
   </div>
+  <div class="layer"><div class="icing"></div></div>
+  <div class="layer"><div class="icing"></div></div>
+  <div class="layer"><div class="icing"></div></div>
+  <div class="layer"><div class="icing"></div></div>
 </div>
+
+<h1>Happy Birthday, My Dearest Babi&lt;3</h1>
 
 <audio id="song" autoplay>
   <source src="https://www2.cs.uic.edu/~i101/SoundFiles/HappyBirthday.mid" type="audio/midi">
 </audio>
 
 <script>
-  // Blow out candle after 3 seconds
+  // Blow out the candle after 3 seconds
   setTimeout(() => {
     document.getElementById("flame").style.display = "none";
 
@@ -119,25 +131,31 @@
     smoke.classList.add("smoke");
     document.querySelector(".candle").appendChild(smoke);
 
-    // Confetti
-    for (let i = 0; i < 100; i++) {
+    // Start looping confetti like a stage celebration 🎊
+    let confettiInterval = setInterval(() => {
       const confetti = document.createElement("div");
       confetti.style.position = "fixed";
-      confetti.style.width = "8px";
-      confetti.style.height = "8px";
+      confetti.style.width = "10px";
+      confetti.style.height = "10px";
       confetti.style.background = `hsl(${Math.random() * 360},100%,50%)`;
       confetti.style.top = "-10px";
       confetti.style.left = Math.random() * window.innerWidth + "px";
-      confetti.style.opacity = "0.8";
-      confetti.style.transition = "transform 3s linear";
+      confetti.style.opacity = "0.9";
+      confetti.style.borderRadius = "2px";
+      confetti.style.transition = "transform 4s ease-out";
       document.body.appendChild(confetti);
 
       setTimeout(() => {
-        confetti.style.transform = `translateY(${window.innerHeight}px) rotate(${Math.random()*360}deg)`;
+        confetti.style.transform = 
+          `translateY(${window.innerHeight}px) rotate(${Math.random()*720}deg)`;
       }, 50);
 
-      setTimeout(() => confetti.remove(), 4000);
-    }
+      setTimeout(() => confetti.remove(), 5000);
+    }, 100); // new confetti every 100ms
+
+    // Stop after 10 seconds
+    setTimeout(() => clearInterval(confettiInterval), 10000);
+
   }, 3000);
 </script>
 
