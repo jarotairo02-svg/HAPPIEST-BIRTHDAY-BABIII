@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday Babi</title>
+<style>
+  body {
+    background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    margin: 0;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    overflow: hidden;
+  }
+
+  h1 {
+    color: #333;
+    font-size: 2em;
+    margin-bottom: 20px;
+  }
+
+  .cake {
+    position: relative;
+    width: 200px;
+    height: 120px;
+    background: #1e90ff; /* blue cake */
+    border-radius: 10px;
+    transform: translateY(-300px);     /* start high */
+    animation: dropIn 1s ease-out forwards; /* animate down */
+  }
+
+  @keyframes dropIn {
+    from { transform: translateY(-300px); }
+    to { transform: translateY(0); }
+  }
+
+  .icing {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 30px;
+    background: #fff; /* vanilla icing */
+    border-radius: 10px 10px 0 0;
+  }
+
+  .candle {
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    width: 15px;
+    height: 40px;
+    margin-left: -7.5px;
+    background: #ff69b4;
+    border-radius: 3px;
+  }
+
+  .flame {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    width: 15px;
+    height: 20px;
+    margin-left: -7.5px;
+    background: orange;
+    border-radius: 50%;
+    animation: flicker 0.3s infinite alternate;
+  }
+
+  @keyframes flicker {
+    from { transform: scale(1); opacity: 1; }
+    to { transform: scale(1.1); opacity: 0.8; }
+  }
+
+  .smoke {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    width: 10px;
+    height: 10px;
+    margin-left: -5px;
+    border-radius: 50%;
+    background: gray;
+    opacity: 0;
+    animation: smoke 2s forwards;
+  }
+
+  @keyframes smoke {
+    0% { opacity: 0; transform: translateY(0) scale(1); }
+    50% { opacity: 0.6; transform: translateY(-20px) scale(1.2); }
+    100% { opacity: 0; transform: translateY(-50px) scale(1.5); }
+  }
+</style>
+</head>
+<body>
+
+<h1>Happy Birthday, My Dearest Babi&lt;3</h1>
+
+<div class="cake">
+  <div class="icing"></div>
+  <div class="candle">
+    <div class="flame" id="flame"></div>
+  </div>
+</div>
+
+<audio id="song" autoplay>
+  <source src="https://www2.cs.uic.edu/~i101/SoundFiles/HappyBirthday.mid" type="audio/midi">
+</audio>
+
+<script>
+  // Blow out candle after 3 seconds
+  setTimeout(() => {
+    document.getElementById("flame").style.display = "none";
+
+    // Add smoke
+    const smoke = document.createElement("div");
+    smoke.classList.add("smoke");
+    document.querySelector(".candle").appendChild(smoke);
+
+    // Confetti
+    for (let i = 0; i < 100; i++) {
+      const confetti = document.createElement("div");
+      confetti.style.position = "fixed";
+      confetti.style.width = "8px";
+      confetti.style.height = "8px";
+      confetti.style.background = `hsl(${Math.random() * 360},100%,50%)`;
+      confetti.style.top = "-10px";
+      confetti.style.left = Math.random() * window.innerWidth + "px";
+      confetti.style.opacity = "0.8";
+      confetti.style.transition = "transform 3s linear";
+      document.body.appendChild(confetti);
+
+      setTimeout(() => {
+        confetti.style.transform = `translateY(${window.innerHeight}px) rotate(${Math.random()*360}deg)`;
+      }, 50);
+
+      setTimeout(() => confetti.remove(), 4000);
+    }
+  }, 3000);
+</script>
+
+</body>
+</html>
