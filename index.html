@@ -1,163 +1,586 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Happy Birthday Babi</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Happy Birthday — My Dearest Babi ❤</title>
+
+<!-- Cute Japanese style font -->
+<link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap" rel="stylesheet">
+
 <style>
-  body {
-    background: linear-gradient(white, #87CEFA); /* gradient white to blue */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    height: 100vh;
-    margin: 0;
-    overflow: hidden;
-    font-family: "Brush Script MT", cursive; /* calligraphy style */
+  :root{
+    --dark-blue:#001a33;
+    --strawberry:#e75480;
+    --vanilla:#fff9f0;
+    --card-width: 300px;
+  }
+  html,body{
+    height:100%;
+    margin:0;
+    font-family: "Kosugi Maru", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    -webkit-font-smoothing:antialiased;
   }
 
-  h1 {
+  body{
+    background: linear-gradient(180deg, #021428 0%, #3b82f6 35%, #ffffff 100%);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    color: #07203a;
+  }
+
+  .stage{
+    width:100%;
+    max-width:900px;
+    height:100vh;
+    box-sizing:border-box;
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    gap:18px;
+    padding:40px 20px;
+  }
+
+  /* message at bottom */
+  .message {
     position: absolute;
-    bottom: 20px;
-    font-size: 2.5em;
+    bottom: 26px;
+    left:50%;
+    transform: translateX(-50%);
+    font-size: 28px;
     color: #001f3f;
-    text-align: center;
+    text-align:center;
+    text-shadow: 0 2px 0 rgba(255,255,255,0.3);
+    letter-spacing: 0.6px;
   }
 
+  /* cake container */
   .cake {
+    width: var(--card-width);
     position: relative;
-    margin-bottom: 50px;
-    animation: dropIn 1s ease-out forwards;
-    transform: translateY(-300px);
+    display: flex;
+    flex-direction: column-reverse; /* so bottom layer is last in markup */
+    align-items: center;
+    gap: 8px;
+    pointer-events: none;
   }
 
-  @keyframes dropIn {
-    from { transform: translateY(-300px); }
-    to { transform: translateY(0); }
-  }
-
+  /* each layer (we'll stack 4) */
   .layer {
-    width: 220px;
-    height: 50px;
-    background: #001f3f; /* dark blue */
-    border-radius: 0 0 15px 15px;
-    margin: 5px auto;
-    position: relative;
-  }
-
-  .icing {
     width: 100%;
-    height: 15px;
-    background: #fff;
-    border-radius: 15px 15px 0 0;
-    position: absolute;
-    top: -15px;
-    left: 0;
+    height: 48px;
+    background: linear-gradient(180deg, #c92f55 0%, var(--strawberry) 60%); /* strawberry-ish */
+    border-radius: 14px;
+    position: relative;
+    transform: translateY(-400px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.25);
+    overflow: visible;
   }
 
+  /* icing (on top of each layer) — will "pour" (grow) */
+  .icing {
+    position:absolute;
+    top: -18px;
+    left: 0;
+    width: 100%;
+    height: 18px;
+    background: linear-gradient(180deg, #fffef6, var(--vanilla));
+    border-radius: 12px 12px 6px 6px;
+    transform-origin: top;
+    transform: scaleY(0);
+    overflow: hidden;
+  }
+
+  /* little spreader knife animation on top of icing */
+  .spreader {
+    position:absolute;
+    top: -8px;
+    left: -30%;
+    width: 30%;
+    height: 10px;
+    background: rgba(0,0,0,0.06);
+    border-radius:6px;
+    transform: translateX(-10px) rotate(-6deg);
+    opacity:0;
+  }
+
+  /* candle sits centered above top layer via absolute positioning */
   .candle {
-    position: absolute;
-    top: -70px;
-    left: 50%;
-    width: 20px;
-    height: 60px;
-    margin-left: -10px;
-    background: pink;
-    border-radius: 5px;
+    position:absolute;
+    top: calc(-48px * 4 - 90px); /* above whole stack */
+    left:50%;
+    transform: translateX(-50%);
+    width:16px;
+    height:56px;
+    background: linear-gradient(180deg, #ffd6e0, #ff9fb1);
+    border-radius:4px;
+    z-index:40;
+    box-shadow:0 6px 10px rgba(0,0,0,0.25);
+    display:flex;
+    align-items:flex-start;
+    justify-content:center;
+    pointer-events:auto;
+  }
+
+  .wick{
+    width:2px;height:8px;background:#222;margin-top:6px;border-radius:1px;
+    align-self:flex-start;
   }
 
   .flame {
-    position: absolute;
-    top: -25px;
-    left: 50%;
-    width: 20px;
-    height: 25px;
-    margin-left: -10px;
-    background: orange;
+    position:absolute;
+    top:-24px;
+    left:50%;
+    transform:translateX(-50%);
+    width:18px;height:24px;border-radius:50%;
+    background: radial-gradient(closest-side, #ffd664 40%, #ff9c2f 70%, transparent 100%);
+    filter: drop-shadow(0 2px 6px rgba(255,150,40,0.45));
+    animation: flicker .28s infinite alternate;
+    z-index:60;
+  }
+  @keyframes flicker{
+    from{ transform: translateX(-50%) scale(1); opacity:1; filter: drop-shadow(0 2px 6px rgba(255,150,40,0.45)); }
+    to{ transform: translateX(-50%) scale(1.12); opacity:0.86; filter: drop-shadow(0 2px 12px rgba(255,90,10,0.35)); }
+  }
+
+  /* drop-in animation: will be applied with stagger delay from JS or CSS variables */
+  @keyframes dropLayer {
+    from{ transform: translateY(-400px) rotate(-6deg); opacity:0; }
+    70% { transform: translateY(12px) rotate(2deg); opacity:1; }
+    to{ transform: translateY(0) rotate(0deg); opacity:1; }
+  }
+
+  /* icing pour animation */
+  @keyframes pour {
+    0% { transform: scaleY(0); }
+    60% { transform: scaleY(1.05); }
+    100% { transform: scaleY(1); }
+  }
+
+  /* knife spread motion */
+  @keyframes spread {
+    0%{ left:-40%; opacity:0; transform:rotate(-12deg); }
+    30%{ opacity:1; left:10%; transform:rotate(-6deg); }
+    100%{ left:110%; opacity:0; transform:rotate(0deg); }
+  }
+
+  /* smoke style: each smoke particle is created by JS and given animation */
+  .smoke-puff {
+    position: fixed;
+    width: 18px;
+    height: 18px;
+    background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.9) 0%, rgba(230,230,230,0.6) 40%, rgba(200,200,200,0.25) 80%, rgba(200,200,200,0) 100%);
     border-radius: 50%;
-    animation: flicker 0.3s infinite alternate;
+    pointer-events:none;
+    z-index:80;
+    transform: translateY(0) scale(1);
+    opacity:0.0;
+    animation: puffUp 5s linear forwards;
   }
 
-  @keyframes flicker {
-    from { transform: scale(1); opacity: 1; }
-    to { transform: scale(1.1); opacity: 0.8; }
+  @keyframes puffUp {
+    0% { transform: translateY(0) scale(0.6); opacity:0.9; filter: blur(0px); }
+    40%{ transform: translateY(-40px) scale(1.1); opacity:0.9; filter: blur(1px); }
+    100%{ transform: translateY(-200px) scale(1.8); opacity:0; filter: blur(4px); }
   }
 
-  .smoke {
+  /* confetti pieces (JS-created) — small rounded rectangles */
+  .confetti {
+    position: fixed;
+    width: 10px;
+    height: 16px;
+    border-radius: 3px;
+    pointer-events:none;
+    z-index:100;
+    transform: translateY(-10px);
+    will-change: transform, opacity;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+  }
+
+  /* control buttons */
+  .controls {
     position: absolute;
-    top: -35px;
-    left: 50%;
-    width: 12px;
-    height: 12px;
-    margin-left: -6px;
-    border-radius: 50%;
-    background: gray;
-    opacity: 0;
-    animation: smoke 2s forwards;
+    top: 22px;
+    right: 22px;
+    display:flex;
+    gap:10px;
+    z-index:120;
   }
 
-  @keyframes smoke {
-    0% { opacity: 0; transform: translateY(0) scale(1); }
-    50% { opacity: 0.6; transform: translateY(-20px) scale(1.2); }
-    100% { opacity: 0; transform: translateY(-50px) scale(1.5); }
+  .btn {
+    background: rgba(255,255,255,0.95);
+    border: none;
+    padding:10px 14px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:600;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+  }
+
+  .counter {
+    position:absolute;
+    top:24px;
+    left:24px;
+    font-size:18px;
+    color:#fff;
+    text-shadow:0 2px 6px rgba(0,0,0,0.4);
+  }
+
+  /* small responsiveness */
+  @media (max-width:420px){
+    :root{ --card-width: 260px; }
+    .message { font-size:20px; bottom:18px; }
   }
 </style>
 </head>
 <body>
+  <div class="stage" id="stage">
+    <div class="controls">
+      <button class="btn" id="wishBtn">Make a wish (Click)</button>
+      <button class="btn" id="restartBtn">Restart</button>
+    </div>
+    <div class="counter" id="counter"></div>
 
-<div class="cake">
-  <div class="candle">
-    <div class="flame" id="flame"></div>
+    <!-- cake structure: 4 layers (bottom first in markup because flex-direction: column-reverse) -->
+    <div class="cake" id="cake">
+      <!-- bottom-most layer (will be dropped first) -->
+      <div class="layer" data-layer="1">
+        <div class="icing"></div>
+        <div class="spreader"></div>
+      </div>
+
+      <div class="layer" data-layer="2">
+        <div class="icing"></div>
+        <div class="spreader"></div>
+      </div>
+
+      <div class="layer" data-layer="3">
+        <div class="icing"></div>
+        <div class="spreader"></div>
+      </div>
+
+      <div class="layer" data-layer="4">
+        <div class="icing"></div>
+        <div class="spreader"></div>
+      </div>
+
+      <!-- candle sits visually above the cake -->
+      <div class="candle" id="candle">
+        <div class="wick"></div>
+        <div class="flame" id="flame"></div>
+      </div>
+    </div>
+
+    <div class="message" id="message">Happy Birthday, My Dearest Babi&lt;3</div>
   </div>
-  <div class="layer"><div class="icing"></div></div>
-  <div class="layer"><div class="icing"></div></div>
-  <div class="layer"><div class="icing"></div></div>
-  <div class="layer"><div class="icing"></div></div>
-</div>
-
-<h1>Happy Birthday, My Dearest Babi&lt;3</h1>
-
-<audio id="song" autoplay>
-  <source src="https://www2.cs.uic.edu/~i101/SoundFiles/HappyBirthday.mid" type="audio/midi">
-</audio>
 
 <script>
-  // Blow out the candle after 3 seconds
-  setTimeout(() => {
-    document.getElementById("flame").style.display = "none";
+/* ---------- State & helpers ---------- */
+const layers = Array.from(document.querySelectorAll('.layer'));
+const cake = document.getElementById('cake');
+const flame = document.getElementById('flame');
+const wishBtn = document.getElementById('wishBtn');
+const restartBtn = document.getElementById('restartBtn');
+const counterEl = document.getElementById('counter');
+const stage = document.getElementById('stage');
 
-    // Add smoke
-    const smoke = document.createElement("div");
-    smoke.classList.add("smoke");
-    document.querySelector(".candle").appendChild(smoke);
+let confettiInterval = null;
+let smokeTimeouts = [];
+let blown = false;
+let audioCtx, masterGain;
 
-    // Start looping confetti like a stage celebration 🎊
-    let confettiInterval = setInterval(() => {
-      const confetti = document.createElement("div");
-      confetti.style.position = "fixed";
-      confetti.style.width = "10px";
-      confetti.style.height = "10px";
-      confetti.style.background = `hsl(${Math.random() * 360},100%,50%)`;
-      confetti.style.top = "-10px";
-      confetti.style.left = Math.random() * window.innerWidth + "px";
-      confetti.style.opacity = "0.9";
-      confetti.style.borderRadius = "2px";
-      confetti.style.transition = "transform 4s ease-out";
-      document.body.appendChild(confetti);
+/* ---------- Drop layers one at a time + icing pour + spreader ---------- */
+function resetLayers(){
+  // reset positions and remove inline animated properties
+  layers.forEach((layer, idx) => {
+    layer.style.transform = 'translateY(-400px)';
+    layer.style.opacity = '0';
+    // remove icing/spreader state
+    const icing = layer.querySelector('.icing');
+    const spreader = layer.querySelector('.spreader');
+    icing.style.transform = 'scaleY(0)';
+    icing.style.transition = '';
+    spreader.style.opacity = 0;
+    spreader.style.left = '-30%';
+  });
+  // show flame
+  flame.style.display = 'block';
+  blown = false;
+  clearCounter();
+}
 
-      setTimeout(() => {
-        confetti.style.transform = 
-          `translateY(${window.innerHeight}px) rotate(${Math.random()*720}deg)`;
-      }, 50);
+/* drop them sequentially */
+function dropAllLayers(){
+  layers.forEach((layer, i) => {
+    const delay = i * 700; // stagger by 700ms
+    setTimeout(() => {
+      layer.style.animation = `dropLayer 650ms cubic-bezier(.22,.9,.2,1) forwards`;
+      layer.style.opacity = 1;
+      // after landing, pour icing
+      setTimeout(() => pourIcing(layer), 280);
+    }, delay);
+  });
+}
 
-      setTimeout(() => confetti.remove(), 5000);
-    }, 100); // new confetti every 100ms
+/* pour icing animation then spread */
+function pourIcing(layer){
+  const icing = layer.querySelector('.icing');
+  const spreader = layer.querySelector('.spreader');
+  icing.style.transition = 'transform 450ms cubic-bezier(.2,.9,.3,1)';
+  icing.style.transform = 'scaleY(1)';
+  // show a spreader sliding across
+  spreader.style.opacity = 1;
+  spreader.style.animation = `spread 520ms ease-out forwards`;
+}
 
-    // Stop after 10 seconds
-    setTimeout(() => clearInterval(confettiInterval), 10000);
+/* ---------- Candle blow sequence ---------- */
+function startBlowTimer(){
+  if(blown) return;
+  let seconds = 5;
+  counterEl.textContent = `Blowing in ${seconds}...`;
+  const tick = setInterval(()=>{
+    seconds--;
+    if(seconds>0){
+      counterEl.textContent = `Blowing in ${seconds}...`;
+    } else {
+      clearInterval(tick);
+      counterEl.textContent = '';
+      blowCandle();
+    }
+  },1000);
+}
 
-  }, 3000);
+/* blow candle: extinguish flame, create smoke, start confetti and play song */
+function blowCandle(){
+  if(blown) return;
+  blown = true;
+  // extinguish flame
+  flame.style.display = 'none';
+  // create persistent smoke for a long time
+  createSmokeLoop();
+  // start endless confetti
+  startConfetti();
+  // play happy birthday tune
+  playCuteHappyBirthday();
+}
+
+/* create many smoke puffs that last longer */
+function createSmokeLoop(){
+  // create several long-lasting puffs near candle
+  const candleRect = document.getElementById('candle').getBoundingClientRect();
+  for(let i=0;i<8;i++){
+    const puff = document.createElement('div');
+    puff.className = 'smoke-puff';
+    const left = candleRect.left + candleRect.width/2 + (Math.random()*40 - 20);
+    const top = candleRect.top + (Math.random()*10 - 10);
+    puff.style.left = `${left}px`;
+    puff.style.top = `${top}px`;
+    // randomize size and animation duration a bit
+    const scale = 12 + Math.random()*18;
+    puff.style.width = `${scale}px`;
+    puff.style.height = `${scale}px`;
+    puff.style.animationDuration = `${5 + Math.random()*3}s`;
+    document.body.appendChild(puff);
+    // remove after long time (keeps long-lasting look)
+    const t = setTimeout(()=> puff.remove(), 12000 + Math.random()*8000);
+    smokeTimeouts.push(t);
+  }
+}
+
+/* ---------- Confetti (endless for now) ---------- */
+function startConfetti(){
+  if(confettiInterval) return;
+  confettiInterval = setInterval(()=> {
+    // create a batch of confetti each tick
+    for(let i=0;i<6;i++){
+      const c = document.createElement('div');
+      c.className = 'confetti';
+      const hue = Math.floor(Math.random()*360);
+      c.style.background = `linear-gradient(180deg, hsl(${hue} 80% 60%), hsl(${(hue+30)%360} 80% 45%))`;
+      c.style.left = `${Math.random()*100}vw`;
+      c.style.top = `-6vh`;
+      c.style.opacity = '0.95';
+      c.style.transform = `translateY(-10px) rotate(${Math.random()*360}deg)`;
+      c.style.width = `${8 + Math.random()*10}px`;
+      c.style.height = `${10 + Math.random()*14}px`;
+      c.style.borderRadius = `${2 + Math.random()*4}px`;
+      document.body.appendChild(c);
+
+      // random fall duration and horizontal drift
+      const fall = 3500 + Math.random()*2500;
+      const driftX = (Math.random()*2 - 1) * 200; // px
+      // animate via transform
+      requestAnimationFrame(()=> {
+        c.style.transition = `transform ${fall}ms cubic-bezier(.2,.9,.2,1), opacity ${fall}ms linear`;
+        c.style.transform = `translate(${driftX}px, ${window.innerHeight + 60}px) rotate(${Math.random()*720}deg)`;
+        c.style.opacity = '1';
+      });
+      // cleanup
+      setTimeout(()=> {
+        if(c && c.parentNode) c.remove();
+      }, fall + 250);
+    }
+  }, 120); // new confetti cluster every 120ms
+}
+
+/* stop confetti and smoke cleanup */
+function stopAllCelebration(){
+  if(confettiInterval) {
+    clearInterval(confettiInterval);
+    confettiInterval = null;
+  }
+  smokeTimeouts.forEach(t=> clearTimeout(t));
+  smokeTimeouts = [];
+  // remove any smoke / confetti elements
+  document.querySelectorAll('.smoke-puff, .confetti').forEach(n=> n.remove());
+}
+
+/* ---------- Audio: cute high-pitched plucky Happy Birthday (synth) ---------- */
+function initAudio(){
+  if(audioCtx) return;
+  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  masterGain = audioCtx.createGain();
+  masterGain.gain.value = 0.9;
+  masterGain.connect(audioCtx.destination);
+}
+
+/* play a short bell/pluck note */
+function playNote(time, freq, dur=0.28, volume=0.12){
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  const filter = audioCtx.createBiquadFilter();
+  filter.type = 'lowpass';
+  filter.frequency.value = 4000;
+  osc.type = 'sine';
+  osc.frequency.value = freq;
+  gain.gain.value = 0;
+  osc.connect(filter);
+  filter.connect(gain);
+  gain.connect(masterGain);
+  osc.start(time);
+  gain.gain.setValueAtTime(volume, time + 0.01);
+  gain.gain.exponentialRampToValueAtTime(0.001, time + dur);
+  osc.stop(time + dur + 0.02);
+}
+
+/* convert MIDI note to frequency */
+function midiToFreq(m){
+  return 440 * Math.pow(2, (m-69)/12);
+}
+
+/* A gentle, cute arrangement of "Happy Birthday" (public domain melody) — higher, bell-like */
+function playCuteHappyBirthday(){
+  initAudio();
+  if(audioCtx.state === 'suspended') audioCtx.resume();
+  // pattern: notes as MIDI numbers, with durations
+  // (This is the standard melody arranged with lighter timing and small octave choices)
+  const score = [
+    [64,0.35],[64,0.35],[66,0.7],[64,0.7],[69,0.7],[68,1.1],
+    [64,0.35],[64,0.35],[66,0.7],[64,0.7],[71,0.7],[69,1.1],
+    [64,0.35],[64,0.35],[76,0.7],[73,0.7],[69,0.7],[66,0.7],[71,1.1],
+    [74,0.35],[74,0.35],[73,0.7],[69,0.7],[71,0.7],[69,1.4]
+  ];
+  const now = audioCtx.currentTime + 0.05;
+  let t = now;
+  for(const [midi, dur] of score){
+    const freq = midiToFreq(midi);
+    // play layered pluck + bell
+    playPluck(t, freq, dur);
+    playBell(t + 0.02, freq, dur*1.1);
+    t += dur;
+  }
+  // return a promise or set a callback if you want to know when finished
+}
+
+/* pluck (short) */
+function playPluck(start, freq, dur){
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  const filter = audioCtx.createBiquadFilter();
+  filter.type='lowpass';
+  filter.frequency.value = 3800;
+  osc.type='triangle';
+  osc.frequency.value = freq;
+  gain.gain.setValueAtTime(0.0001, start);
+  gain.gain.exponentialRampToValueAtTime(0.18, start + 0.01);
+  gain.gain.exponentialRampToValueAtTime(0.0005, start + dur);
+  osc.connect(filter); filter.connect(gain); gain.connect(masterGain);
+  osc.start(start); osc.stop(start + dur + 0.05);
+}
+
+/* bell (sustained, plucked feel) */
+function playBell(start, freq, dur){
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  const biq = audioCtx.createBiquadFilter();
+  biq.type='lowpass'; biq.frequency.value = 7000;
+  osc.type='sine';
+  osc.frequency.value = freq * 1.0;
+  gain.gain.setValueAtTime(0.0001, start);
+  gain.gain.exponentialRampToValueAtTime(0.12, start + 0.02);
+  gain.gain.exponentialRampToValueAtTime(0.0002, start + dur + 0.2);
+  osc.connect(biq); biq.connect(gain); gain.connect(masterGain);
+  osc.start(start); osc.stop(start + dur + 0.5);
+}
+
+/* ---------- UI wiring ---------- */
+wishBtn.addEventListener('click', () => {
+  // start sequence: drop layers (only on first click)
+  resetAll();
+  dropAllLayers();
+  // start 5-sec blow timer after layers have dropped and icing poured (but user requested click -> timer for 5 sec directly)
+  // We'll start immediate 5s timer per request:
+  startBlowTimer();
+});
+
+restartBtn.addEventListener('click', () => {
+  resetAll();
+  dropAllLayers();
+});
+
+stage.addEventListener('click', (e)=>{
+  // clicking stage restarts when celebration is ongoing (per user)
+  if(blown){
+    resetAll();
+    dropAllLayers();
+  }
+});
+
+/* reset everything to start state */
+function resetAll(){
+  stopAllCelebration();
+  // clear current animations
+  layers.forEach(layer => {
+    layer.style.animation = '';
+    layer.style.transform = 'translateY(-400px)';
+    layer.style.opacity = 0;
+    const icing = layer.querySelector('.icing');
+    icing.style.transition = '';
+    icing.style.transform = 'scaleY(0)';
+    const spreader = layer.querySelector('.spreader');
+    spreader.style.animation = '';
+    spreader.style.opacity = 0;
+    spreader.style.left = '-30%';
+  });
+  flame.style.display = 'block';
+  clearCounter();
+  blown = false;
+}
+
+/* helper to clear counter display */
+function clearCounter(){ counterEl.textContent = ''; }
+
+/* initial drop so page shows falling once on load */
+window.addEventListener('load', ()=>{
+  resetAll();
+  // small delay before first drop for nicer arrival
+  setTimeout(()=> dropAllLayers(), 300);
+});
+
 </script>
-
 </body>
 </html>
