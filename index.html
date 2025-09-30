@@ -289,6 +289,7 @@
   </body>
 </html>
 
+<!-- Play Music Button -->
 <button onclick="playMusic()" style="
   margin-top:20px;
   padding:10px 20px;
@@ -302,15 +303,21 @@
   ▶ Play Birthday Song
 </button>
 
+<!-- Hidden YouTube Player -->
 <iframe id="ytplayer" width="0" height="0"
-    src="https://www.youtube.com/watch?v=ZRlVjrepX1I&list=RDZRlVjrepX1I&start_radio=?enablejsapi=1"
-    frameborder="0" allow="autoplay"></iframe>
+    src="https://www.youtube.com/embed/ZRlVjrepX1I?enablejsapi=1&rel=0"
+    frameborder="0"
+    allow="autoplay; encrypted-media"
+    allowfullscreen></iframe>
 
 <script>
   function playMusic() {
-    let iframe = document.getElementById('ytplayer').contentWindow;
-    // Sends a message to the YouTube iframe to play
-    iframe.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+    let iframe = document.getElementById('ytplayer');
+    iframe.contentWindow.postMessage(
+      '{"event":"command","func":"playVideo","args":""}',
+      '*'
+    );
   }
 </script>
+
 
