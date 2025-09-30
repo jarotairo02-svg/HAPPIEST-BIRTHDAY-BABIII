@@ -283,8 +283,34 @@
         <rect x="10" y="475.571" fill="#fefae9" width="180" height="4" />
       </svg>
       <div class="text">
-      <h1>happy birthday!</h1>
+      <h1>Happy birthday!</h1>
       <p class="name">Babiii<3</p>
       </div>
   </body>
 </html>
+
+<button onclick="playMusic()" style="
+  margin-top:20px;
+  padding:10px 20px;
+  font-size:16px;
+  border:none;
+  border-radius:8px;
+  background:#ff4d6d;
+  color:white;
+  cursor:pointer;
+">
+  ▶ Play Birthday Song
+</button>
+
+<iframe id="ytplayer" width="0" height="0"
+    src="https://www.youtube.com/watch?v=ZRlVjrepX1I&list=RDZRlVjrepX1I&start_radio=?enablejsapi=1"
+    frameborder="0" allow="autoplay"></iframe>
+
+<script>
+  function playMusic() {
+    let iframe = document.getElementById('ytplayer').contentWindow;
+    // Sends a message to the YouTube iframe to play
+    iframe.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+  }
+</script>
+
