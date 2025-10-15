@@ -20,8 +20,8 @@
       }
 
       .name{
-        font-size: 4.4rem;
-        font-weight: 800;
+        font-size: 3.3rem;
+        font-weight: 700;
       }
 
       #cake {
@@ -32,24 +32,23 @@
 
       /* ============================================== Candle
       */
-
-      .cake {
+.cake {
         background: #ffffff;
-        border-radius: 10px;
-        position: absolute;
-        top: 228px;
+        border-radius: 50px;
+        position: fixed;
+        top: 380px;
         left: 50%;
         margin-left: -2.4px;
         margin-top: -8.33333333px;
-        width: 5px;
-        height: 35px;
-        transform: translateY(-300px);
+        width: 7px;
+        height: 50px;
+        transform: translateY(-900px);
         backface-visibility: hidden;
-        animation: in 500ms 6s ease-out forwards;
+        animation: in 0.5s 6s forwards;
       }
       .cake:after,
       .cake:before {
-        background: rgba(255, 0, 0, 0.4);
+        background: rgba(4, 60, 98, 0.709);
         content: "";
         position: absolute;
         width: 100%;
@@ -115,14 +114,21 @@
       }
 
       .text {
-        color: #8b6a60;
-        font-family: 'Lato', sans-serif;
-        font-weight: 300;
+        color: #ffffff;
+        font-family: 'KaiTi', cursive, sans-serif;
+        margin-bottom: 10cm;
+        text-orientation:mixed;
+        font-weight: 50;
         font-style:italic;
         text-align: center;
-        h1 {
-          font-size: 1.4em;
-        }
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        margin-bottom: -20ptx;
+      }
+      .text h1 {
+        font-size: 2.5em;
       }
     </style>
   </head>
@@ -134,7 +140,7 @@
         <div class="fuego"></div>
         <div class="fuego"></div>
       </div>
-      <svg id="cake" version="1.1" x="0px" y="0px" width="200px" height="500px" viewBox="0 0 200 500" enable-background="new 0 0 200 500" xml:space="preserve">
+      <svg id="cake" version="1.1" x="0px" y="0px" width="600px" height="700px" viewBox="0 0 200 500" enable-background="new 0 0 200 900" xml:space="preserve">
         <path fill="#FF8F8F" d="M173.667-13.94c-49.298,0-102.782,0-147.334,0c-3.999,0-4-16.002,0-16.002
         c44.697,0,96.586,0,147.334,0C177.667-29.942,177.668-13.94,173.667-13.94z">
             <animate id="bizcocho_3" attributeName="d" calcMode="spline" keySplines="0 0 1 1; 0 0 1 1" begin="relleno_2.end" dur="0.3s" fill="freeze" values="
@@ -283,378 +289,181 @@
         <rect x="10" y="475.571" fill="#fefae9" width="180" height="4" />
       </svg>
       <div class="text">
-      <h1>Happy birthday!</h1>
-      <p class="name">Babiii<3</p>
+      <h1>Happy Birthday,
+        Babiii<3!</h1>
       </div>
   </body>
 </html>
 
-<!-- Play Music Button -->
-<button onclick="playMusic()" style="
-  margin-top:20px;
-  padding:10px 20px;
-  font-size:16px;
-  border:none;
-  border-radius:8px;
-  background:#ff4d6d;
-  color:white;
-  cursor:pointer;
-">
-  ▶ Play Birthday Song
-</button>
+<!-- 🎵 Play / Pause Music Button -->
+<button id="musicBtn" onclick="toggleMusic()">▶ Play Birthday Song</button>
 
-<!-- Hidden YouTube Player -->
+<!-- 🎶 Hidden YouTube Player -->
 <iframe id="ytplayer" width="0" height="0"
-    src="https://www.youtube.com/embed/ZRlVjrepX1I?enablejsapi=1&rel=0"
-    frameborder="0"
-    allow="autoplay; encrypted-media"
-    allowfullscreen></iframe>
+  src="https://www.youtube.com/embed/ZRlVjrepX1I?enablejsapi=1&rel=0"
+  frameborder="0"
+  allow="autoplay; encrypted-media"
+  allowfullscreen></iframe>
 
-<script>
-  function playMusic() {
-    let iframe = document.getElementById('ytplayer');
-    iframe.contentWindow.postMessage(
-      '{"event":"command","func":"playVideo","args":""}',
-      '*'
-    );
-  }
-</script>
-
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Polaroid Surprise — Happy Birthday</title>
 <style>
-  :root{
-    --bg1: #021428;
-    --bg2: #87CEFA;
-    --paper:#fffefc;
-    --polaroid-border:#f2f2f2;
-    --accent:#ff6b88;
-  }
-  html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Kosugi Maru", sans-serif;}
-  body{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background: linear-gradient(180deg, var(--bg1), var(--bg2));
-    overflow:hidden;
-    color:#07203a;
-  }
-
-  .stage{
-    width:100%;
-    max-width:1000px;
-    height:100vh;
-    box-sizing:border-box;
-    position:relative;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    gap:18px;
-    padding:40px;
+  /* 🌸 Button Style */
+  #musicBtn {
+    margin-top: 20px;
+    margin-bottom: 6cm;
+    padding: 10px 20px;
+    font-size: 10px;
+    border: none;
+    border-radius: 40px;
+    background: linear-gradient(90deg, #a7bdd0, #cde4ff);
+    color: rgb(0, 0, 0);
+    font-family: "Kosugi Maru", cursive, sans-serif;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
   }
 
-  /* Polaroid */
-  .polaroid {
-    width:320px;
-    background:var(--paper);
-    border-radius:6px;
-    padding:12px 12px 20px 12px;
-    box-shadow: 0 18px 40px rgba(2,20,40,0.45);
-    border:8px solid var(--polaroid-border);
-    transform: rotate(-6deg);
-    transition:transform .35s ease, box-shadow .25s;
-    user-select:none;
-  }
-  .polaroid:hover{ transform: rotate(-2deg) scale(1.02); box-shadow:0 26px 50px rgba(2,20,40,0.55); }
-
-  .photo {
-    width:100%;
-    height:320px;
-    background: #ddd;
-    border-radius:4px;
-    overflow:hidden;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-  }
-  .photo img{ width:100%; height:100%; object-fit:cover; display:block; }
-
-  .caption {
-    margin-top:12px;
-    font-family: "Kosugi Maru", "Brush Script MT", cursive;
-    text-align:center;
-    color:#102a43;
-    font-size:20px;
+  /* 🌈 Hover Effect */
+  #musicBtn:hover {
+    transform: scale(1.1);
+    background: linear-gradient(90deg, #4283d7, #4283d7,#4283d7, #ffe6ea,);
+    
   }
 
-  /* Controls */
-  .controls {
-    display:flex;
-    gap:12px;
-    margin-top:10px;
-    z-index:200;
+  /* 💖 Pressed Effect */
+  #musicBtn:active {
+    transform: scale(0.95);
   }
-  .btn {
-    background: linear-gradient(180deg,#fff,#ffd4dd);
-    border:none;
-    padding:10px 14px;
-    border-radius:10px;
-    cursor:pointer;
-    font-weight:700;
-    color:#7a1733;
-    box-shadow: 0 8px 18px rgba(0,0,0,0.16);
-  }
-  .btn.secondary { background: linear-gradient(180deg,#e6f4ff,#d0eaff); color:#0b4a6f; }
-
-  /* Lights string across top */
-  .lights {
-    position:absolute;
-    top:10px;
-    left:0;
-    right:0;
-    height:70px;
-    pointer-events:none;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    z-index:150;
-  }
-  .bulb {
-    display:inline-block;
-    width:14px;
-    height:18px;
-    margin:6px 8px;
-    border-radius:50%;
-    background: #222;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.4);
-    transform-origin:center;
-    opacity:0.9;
-    transition:box-shadow .2s, transform .15s;
-  }
-  /* glowing colors */
-  .bulb.c1{ background: #ffb3c6; box-shadow: 0 0 14px rgba(255,179,198,0.25); }
-  .bulb.c2{ background: #ffd17a; box-shadow: 0 0 14px rgba(255,209,122,0.25); }
-  .bulb.c3{ background: #9be7ff; box-shadow: 0 0 14px rgba(155,231,255,0.25); }
-  .bulb.c4{ background: #c3b3ff; box-shadow: 0 0 14px rgba(195,179,255,0.25); }
-
-  .lights.on .bulb{ animation: twinkle 1.4s infinite; }
-  .lights.on .bulb:nth-child(2n){ animation-delay:.15s; }
-  .lights.on .bulb:nth-child(3n){ animation-delay:.28s; }
-  @keyframes twinkle {
-    0%{ transform: scale(1); filter: saturate(1); opacity: .9; box-shadow: 0 0 8px rgba(255,255,255,0); }
-    50%{ transform: scale(1.12); filter: saturate(1.2); opacity: 1; box-shadow: 0 0 18px rgba(255,255,255,0.18); }
-    100%{ transform: scale(1); opacity:.9; }
-  }
-
-  /* Confetti style (appended by JS) */
-  .confetti {
-    position:fixed;
-    width:10px;
-    height:14px;
-    border-radius:3px;
-    pointer-events:none;
-    z-index:200;
-    transform: translateY(-10px);
-    will-change: transform, opacity;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.14);
-  }
-
-  /* small mobile adjustments */
-  @media (max-width:420px){
-    .polaroid{ width:86%; transform: rotate(-3deg); }
-    .photo{ height:260px; }
-    .caption{ font-size:18px; }
-  }
-
-  /* helper: centered small hint */
-  .hint { position:absolute; bottom:18px; left:50%; transform:translateX(-50%); color:rgba(255,255,255,0.9); font-size:13px; text-shadow:0 2px 6px rgba(0,0,0,0.3); }
 </style>
-</head>
-<body>
-  <div class="stage" id="stage">
-    <!-- Lights that toggle on/off -->
-    <div class="lights" id="lights" aria-hidden="true" style="pointer-events:none;">
-      <!-- bulbs -->
-      <span class="bulb c1"></span><span class="bulb c2"></span><span class="bulb c3"></span><span class="bulb c4"></span>
-      <span class="bulb c1"></span><span class="bulb c2"></span><span class="bulb c3"></span><span class="bulb c4"></span>
-      <span class="bulb c1"></span><span class="bulb c2"></span><span class="bulb c3"></span><span class="bulb c4"></span>
-    </div>
-
-    <!-- Polaroid with picture -->
-    <div class="polaroid" id="polaroid">
-      <div class="photo">
-        <!-- Replace src below with your boyfriend's photo file or an URL -->
-        <img id="personPhoto" src="Generated Image" alt="My Future">
-        <img id="personPhoto" src="IMG_3684" alt="My Future">
-      </div>
-      <div class="caption" id="captionText">My Dearest Babi ❤</div>
-    </div>
-
-    <!-- Controls -->
-    <div class="controls" role="toolbar" aria-label="controls">
-      <button class="btn" id="playBtn">▶ Play Music</button>
-      <button class="btn secondary" id="confettiBtn">🎊 Confetti</button>
-      <button class="btn secondary" id="lightsBtn">💡 Lights</button>
-    </div>
-
-    <div class="hint">Click Play → Then press Confetti or Lights. Click image to change photo (see instructions).</div>
-
-    <!-- Hidden audio element (replace src with your mp3 if you prefer) -->
-    <audio id="audio" preload="auto">
-      <!-- Example cute song; replace with your preferred mp3 URL or file path -->
-      <source src="https://files.catbox.moe/0g7h9k.mp3" type="audio/mpeg">
-      Your browser doesn't support audio.
-    </audio>
-  </div>
 
 <script>
-/* ========= User-editable: change these to your files ========== */
-// If you want to use a YouTube link instead, tell me and I'll show iframe approach.
-// Replace personPhoto.src with your own image path or URL if desired.
-const photoEl = document.getElementById('personPhoto');
-const audioEl = document.getElementById('audio');
+  let isPlaying = false;
 
-/* ========== Buttons ========== */
-const playBtn = document.getElementById('playBtn');
-const confettiBtn = document.getElementById('confettiBtn');
-const lightsBtn = document.getElementById('lightsBtn');
-const lights = document.getElementById('lights');
-const stage = document.getElementById('stage');
+  function toggleMusic() {
+    const iframe = document.getElementById('ytplayer');
+    const button = document.getElementById('musicBtn');
 
-let confettiInterval = null;
-let confettiRunning = false;
-let lightsOn = false;
-let audioPlaying = false;
-
-/* ---------- Play / Pause audio ---------- */
-playBtn.addEventListener('click', async () => {
-  try {
-    if(!audioPlaying){
-      // resume audio context if needed by browser policies (some browsers require user gesture)
-      await audioEl.play();
-      audioPlaying = true;
-      playBtn.textContent = '⏸ Pause Music';
+    if (!isPlaying) {
+      // ▶ Play
+      iframe.contentWindow.postMessage(
+        '{"event":"command","func":"playVideo","args":""}',
+        '*'
+      );
+      button.innerHTML = "⏸ Pause Birthday Song";
+      isPlaying = true;
     } else {
-      audioEl.pause();
-      audioPlaying = false;
-      playBtn.textContent = '▶ Play Music';
+      // ⏸ Pause
+      iframe.contentWindow.postMessage(
+        '{"event":"command","func":"pauseVideo","args":""}',
+        '*'
+      );
+      button.innerHTML = "▶ Play Birthday Song";
+      isPlaying = false;
     }
-  } catch (err){
-    console.warn('Audio play failed:', err);
-    alert('Your browser blocked autoplay — try clicking directly on the page or allow audio.');
   }
-});
-
-/* ---------- Confetti toggle (endless until toggled off) ---------- */
-confettiBtn.addEventListener('click', () => {
-  if(confettiRunning){
-    stopConfetti();
-  } else {
-    startConfetti();
-  }
-});
-
-function startConfetti(){
-  if(confettiRunning) return;
-  confettiRunning = true;
-  confettiBtn.textContent = '🛑 Stop Confetti';
-  confettiInterval = setInterval(() => spawnConfettiCluster(), 120);
-}
-function stopConfetti(){
-  confettiRunning = false;
-  confettiBtn.textContent = '🎊 Confetti';
-  clearInterval(confettiInterval);
-  confettiInterval = null;
-}
-
-/* spawn a small cluster of confetti */
-function spawnConfettiCluster(){
-  for(let i=0;i<6;i++){
-    const c = document.createElement('div');
-    c.className = 'confetti';
-    const hue = Math.floor(Math.random()*360);
-    c.style.background = `linear-gradient(180deg,hsl(${hue} 80% 60%), hsl(${(hue+30)%360} 80% 45%))`;
-    c.style.left = (Math.random() * 100) + 'vw';
-    c.style.top = '-6vh';
-    c.style.opacity = '0.95';
-    c.style.width = (8 + Math.random()*10) + 'px';
-    c.style.height = (10 + Math.random()*14) + 'px';
-    c.style.borderRadius = (2 + Math.random()*4) + 'px';
-    document.body.appendChild(c);
-
-    const fall = 3200 + Math.random()*3000;
-    const driftX = (Math.random()*2 - 1) * (80 + Math.random()*200); // px
-    // animate via transform
-    requestAnimationFrame(()=> {
-      c.style.transition = `transform ${fall}ms cubic-bezier(.2,.9,.2,1), opacity ${fall}ms linear`;
-      c.style.transform = `translate(${driftX}px, ${window.innerHeight + 200}px) rotate(${Math.random()*900}deg)`;
-      c.style.opacity = '1';
-    });
-    // cleanup
-    setTimeout(()=> { if(c && c.parentNode) c.remove(); }, fall + 400);
-  }
-}
-
-/* ---------- Lights toggle ---------- */
-lightsBtn.addEventListener('click', ()=>{
-  lightsOn = !lightsOn;
-  if(lightsOn){
-    lights.classList.add('on');
-    lightsBtn.textContent = '💡 Lights Off';
-  } else {
-    lights.classList.remove('on');
-    lightsBtn.textContent = '💡 Lights';
-  }
-});
-
-/* ---------- Click photo to replace (local file) ---------- */
-photoEl.addEventListener('click', () => {
-  // allow user to pick an image file from their computer to replace the photo
-  const input = document.createElement('input');
-  input.type = 'file';
-  input.accept = 'image/*';
-  input.onchange = (e) => {
-    const file = e.target.files[0];
-    if(!file) return;
-    const url = URL.createObjectURL(file);
-    photoEl.src = url;
-  };
-  input.click();
-});
-
-/* ---------- Optional: reset with double-click stage ---------- */
-stage.addEventListener('dblclick', ()=>{
-  stopConfetti();
-  if(audioPlaying){
-    audioEl.pause();
-    audioEl.currentTime = 0;
-    playBtn.textContent = '▶ Play Music';
-    audioPlaying = false;
-  }
-  lights.classList.remove('on'); lightsOn = false; lightsBtn.textContent = '💡 Lights';
-});
-
-/* ---------- Accessibility: keyboard shortcuts ---------- */
-window.addEventListener('keydown', (e)=>{
-  if(e.key === 'c'){ // toggle confetti
-    confettiBtn.click();
-  } else if(e.key === 'l'){ // toggle lights
-    lightsBtn.click();
-  } else if(e.key === 'm'){ // play music
-    playBtn.click();
-  }
-});
-
-/* ---------- Clean up on unload ---------- */
-window.addEventListener('beforeunload', ()=>{
-  stopConfetti();
-});
 </script>
-</body>
-</html>
+
+
+
+<!-- 🎊 Confetti Button -->
+<button id="confettiBtn">🎉 Celebrate!</button>
+
+<!-- 🔊 Confetti Pop Sound -->
+<audio id="confettiSound" src="https://www.myinstants.com/media/sounds/confetti-pop.mp3" preload="auto"></audio> 
+
+<style>
+  /* Button styling */
+  #confettiBtn {
+    margin-top:50px; 
+    margin-bottom:50cm; 
+    padding:10px 20px;
+    font-size: 10px;
+    border: none;
+    border-radius: 40px;
+    background: linear-gradient(90deg, #a7bdd0, #cde4ff);
+    color: #000;
+    font-family: "Kosugi Maru", cursive, sans-serif;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+  }
+
+  #confettiBtn:hover {
+    transform: scale(1.1);
+    background: linear-gradient(90deg,#ffe6ea, #4283d7);
+  }
+
+  /* Confetti pieces */
+  .confetti {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    opacity: 1;
+    pointer-events: none;
+    border-radius: 2px;
+  }
+
+  @keyframes explode {
+    0% {
+      transform: translate(0, 0) scale(1) rotate(0deg);
+      opacity: 1;
+    }
+    100% {
+      transform: translate(var(--x), var(--y)) scale(0.8) rotate(720deg);
+      opacity: 0;
+    }
+  }
+</style>
+
+<script>
+  const button = document.getElementById("confettiBtn");
+  const sound = document.getElementById("confettiSound");
+
+  button.addEventListener("click", () => {
+    // 🔊 Play pop sound
+    sound.currentTime = 0;
+    sound.play();
+  
+    // Confetti bursts from random spots (like poppers around the screen)
+    const burstPoints = [
+      { x: window.innerWidth * 0.2, y: window.innerHeight * 0.3 },
+      { x: window.innerWidth * 0.8, y: window.innerHeight * 0.3 },
+      { x: window.innerWidth * 0.5, y: window.innerHeight * 0.2 },
+      { x: window.innerWidth * 0.4, y: window.innerHeight * 0.6 },
+      { x: window.innerWidth * 0.6, y: window.innerHeight * 0.5 }
+    ];
+
+    burstPoints.forEach(point => createConfettiBurst(point.x, point.y));
+  });
+
+  function createConfettiBurst(originX, originY) {
+    for (let i = 0; i < 40; i++) {
+      const confetti = document.createElement("div");
+      confetti.classList.add("confetti");
+
+      // Random direction (exploding outward)
+      const angle = Math.random() * 2 * Math.PI;
+      const distance = Math.random() * 400 + 100;
+      const x = Math.cos(angle) * distance + "px";
+      const y = Math.sin(angle) * distance + "px";
+
+      confetti.style.setProperty("--x", x);
+      confetti.style.setProperty("--y", y);
+      confetti.style.left = originX + "px";
+      confetti.style.top = originY + "px";
+
+      // Random color + size + speed
+      confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 70%)`;
+      confetti.style.width = Math.random() * 8 + 6 + "px";
+      confetti.style.height = Math.random() * 8 + 6 + "px";
+      confetti.style.animation = `explode ${Math.random() * 1.5 + 2}s ease-out forwards`;
+
+      document.body.appendChild(confetti);
+
+      // Remove after animation
+      setTimeout(() => confetti.remove(), 10000);
+    }
+  }
+</script>
+
+
 
